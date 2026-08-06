@@ -1,6 +1,7 @@
 import type { GeoJSON, MapLevel, RegionNode } from '@/types/region'
 
-const GEO_BASE = 'https://geo.datav.aliyun.com/areas_v3/bound'
+/** 同源静态边界，避免阿里云 DataV Referer ACL 在 Vercel 上 403 */
+const GEO_BASE = '/geo'
 const cache = new Map<string, GeoJSON>()
 
 export const ROOT_REGION: RegionNode = {
