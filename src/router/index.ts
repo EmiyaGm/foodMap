@@ -14,6 +14,12 @@ const router = createRouter({
           meta: { title: '首页' },
         },
         {
+          path: 'region/:adcode',
+          name: 'region',
+          component: () => import('@/views/HomeView.vue'),
+          meta: { title: '区域地图' },
+        },
+        {
           path: 'about',
           name: 'about',
           component: () => import('@/views/AboutView.vue'),

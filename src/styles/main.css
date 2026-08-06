@@ -1,3 +1,18 @@
+:root {
+  --ink: #0f2444;
+  --cobalt: #1b4b8a;
+  --seal: #b83b2e;
+  --porcelain: #f4f7fb;
+  --mist: #e2ebf3;
+  font-family: 'Noto Serif SC', 'Songti SC', 'PingFang SC', serif;
+  color: var(--ink);
+  background: var(--mist);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 *,
 *::before,
 *::after {
@@ -12,14 +27,9 @@ body,
 }
 
 body {
-  font-family:
-    'Helvetica Neue',
-    Helvetica,
-    'PingFang SC',
-    'Hiragino Sans GB',
-    'Microsoft YaHei',
-    Arial,
-    sans-serif;
-  color: #303133;
-  background: #f5f7fa;
+  background: var(--mist);
+}
+
+a {
+  color: inherit;
 }
