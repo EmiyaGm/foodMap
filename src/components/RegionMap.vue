@@ -203,7 +203,7 @@ onUnmounted(() => {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 420px;
+  min-height: 0;
 }
 
 .region-map__canvas {

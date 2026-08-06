@@ -154,8 +154,12 @@ function onMapReady(payload: { childLevel: string }) {
             暂无数据
           </li>
         </ul>
-        <p v-if="mapStore.hoveredName" class="atlas__hover">
-          {{ mapStore.hoveredName }}
+        <p
+          class="atlas__hover"
+          :class="{ 'is-active': !!mapStore.hoveredName }"
+          aria-live="polite"
+        >
+          {{ mapStore.hoveredName || '\u00a0' }}
         </p>
       </aside>
 
@@ -174,9 +178,13 @@ function onMapReady(payload: { childLevel: string }) {
 <style scoped>
 .atlas {
   position: relative;
-  min-height: calc(100vh - 64px);
-  padding: clamp(20px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - 64px);
+  max-height: calc(100dvh - 64px);
+  padding: clamp(12px, 2vw, 24px);
   overflow: hidden;
+  box-sizing: border-box;
   color: #0f2444;
 }
 
@@ -210,10 +218,11 @@ function onMapReady(payload: { childLevel: string }) {
 .atlas__header {
   display: flex;
   flex-wrap: wrap;
+  flex-shrink: 0;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 20px 32px;
-  margin-bottom: clamp(16px, 2.5vw, 28px);
+  gap: 12px 28px;
+  margin-bottom: clamp(10px, 1.6vw, 18px);
   animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -223,14 +232,14 @@ function onMapReady(payload: { childLevel: string }) {
 
 .atlas__seal {
   display: inline-block;
-  margin: 0 0 8px;
+  margin: 0 0 4px;
   padding: 2px 8px;
   border: 1.5px solid #b83b2e;
   color: #b83b2e;
   font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   letter-spacing: 0.35em;
-  line-height: 1.4;
+  line-height: 1.3;
   transform: rotate(-2deg);
   animation: seal-in 0.8s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -238,7 +247,7 @@ function onMapReady(payload: { childLevel: string }) {
 .atlas__brand {
   margin: 0;
   font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
-  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
   font-weight: 400;
   letter-spacing: 0.12em;
   line-height: 1.1;
@@ -246,13 +255,13 @@ function onMapReady(payload: { childLevel: string }) {
 }
 
 .atlas__tagline {
-  margin: 10px 0 0;
+  margin: 6px 0 0;
   max-width: 22rem;
   color: rgba(15, 36, 68, 0.68);
   font-family: 'Noto Serif SC', serif;
-  font-size: 0.98rem;
+  font-size: 0.88rem;
   letter-spacing: 0.08em;
-  line-height: 1.7;
+  line-height: 1.5;
   animation: rise 0.8s 0.12s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -261,7 +270,7 @@ function onMapReady(payload: { childLevel: string }) {
   flex-wrap: wrap;
   align-items: center;
   gap: 2px 0;
-  padding: 8px 0;
+  padding: 4px 0;
   font-family: 'Noto Serif SC', serif;
 }
 
@@ -274,7 +283,7 @@ function onMapReady(payload: { childLevel: string }) {
   background: transparent;
   color: #1b4b8a;
   font: inherit;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   letter-spacing: 0.04em;
   cursor: pointer;
   transition: color 0.2s ease;
@@ -298,9 +307,10 @@ function onMapReady(payload: { childLevel: string }) {
 
 .atlas__stage {
   display: grid;
-  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
-  gap: clamp(16px, 2vw, 28px);
-  min-height: min(72vh, 760px);
+  flex: 1;
+  grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
+  gap: clamp(12px, 1.8vw, 24px);
+  min-height: 0;
   animation: rise 0.85s 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -308,12 +318,13 @@ function onMapReady(payload: { childLevel: string }) {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding-bottom: 12px;
+  min-height: 0;
+  padding-bottom: 8px;
+  overflow: hidden;
 }
 
 .atlas__meta.has-specialty {
   justify-content: flex-start;
-  max-height: min(72vh, 760px);
   overflow-y: auto;
   padding-right: 4px;
   scrollbar-width: thin;
@@ -323,39 +334,39 @@ function onMapReady(payload: { childLevel: string }) {
 .atlas__meta-label {
   margin: 0;
   color: rgba(27, 75, 138, 0.7);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
 }
 
 .atlas__meta-title {
-  margin: 10px 0 0;
+  margin: 8px 0 0;
   font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
   font-weight: 400;
   letter-spacing: 0.1em;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 .atlas__meta-hint {
-  margin: 12px 0 0;
+  margin: 8px 0 0;
   color: rgba(15, 36, 68, 0.58);
   font-family: 'Noto Serif SC', serif;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   letter-spacing: 0.04em;
-  line-height: 1.7;
+  line-height: 1.55;
 }
 
 .atlas__legend {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin: 20px 0 0;
+  gap: 6px;
+  margin: 14px 0 0;
   padding: 0;
   list-style: none;
   color: rgba(15, 36, 68, 0.72);
   font-family: 'Noto Serif SC', serif;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   letter-spacing: 0.06em;
 }
 
@@ -383,17 +394,25 @@ function onMapReady(payload: { childLevel: string }) {
 }
 
 .atlas__hover {
-  margin: 18px 0 0;
+  margin: 12px 0 0;
+  min-height: 1.5em;
   color: #b83b2e;
   font-family: 'Noto Serif SC', serif;
-  font-size: 1rem;
+  font-size: 0.95rem;
   letter-spacing: 0.12em;
-  animation: fade-slide 0.25s ease;
+  line-height: 1.5;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.atlas__hover.is-active {
+  opacity: 1;
 }
 
 .atlas__map-shell {
   position: relative;
-  min-height: min(68vh, 720px);
+  min-height: 0;
+  height: 100%;
   border: 1px solid rgba(27, 75, 138, 0.22);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.28));
@@ -412,18 +431,29 @@ function onMapReady(payload: { childLevel: string }) {
 }
 
 @media (max-width: 860px) {
+  .atlas {
+    height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+
   .atlas__stage {
     grid-template-columns: 1fr;
-    min-height: auto;
+    flex: none;
   }
 
   .atlas__meta {
     order: -1;
     padding-bottom: 0;
+    overflow: visible;
+  }
+
+  .atlas__meta.has-specialty {
+    max-height: 40vh;
   }
 
   .atlas__map-shell {
-    min-height: 58vh;
+    height: min(58vh, 520px);
   }
 }
 
@@ -446,17 +476,6 @@ function onMapReady(payload: { childLevel: string }) {
   to {
     opacity: 1;
     transform: rotate(-2deg) scale(1);
-  }
-}
-
-@keyframes fade-slide {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
 </style>
